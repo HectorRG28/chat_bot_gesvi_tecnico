@@ -3,9 +3,8 @@ import { useChatViewModel } from './viewmodels/useChatViewModel';
 import './App.css';
 
 function App() {
-    const { messages, sendMessage, loading } = useChatViewModel();
+    const { messages, sendMessage, loading, faqs } = useChatViewModel();
     const [input, setInput] = useState('');
-    const faqs = ["Servicios", "Horarios", "Contacto"];
 
     const handleSend = () => {
         if (input.trim()) {
@@ -17,7 +16,6 @@ function App() {
     return (
         <div className="chat-container">
             <header className="chat-header">
-                {/* Nota: src="/logo.png" asumiendo que está en public/logo.png */}
                 <img src="/logo.png" alt="Gesvi Logo" className="logo-img" />
                 <h2 className="chat-title">Gesvi Bot</h2>
             </header>
@@ -25,9 +23,7 @@ function App() {
             <div className="chat-box">
                 {messages.map((msg, index) => (
                     <div key={index} className={`message-wrapper ${msg.sender}`}>
-                        <div className="message-bubble">
-                            {msg.text}
-                        </div>
+                        <div className="message-bubble">{msg.text}</div>
                     </div>
                 ))}
                 {loading && (
@@ -38,11 +34,12 @@ function App() {
             </div>
 
             <div className="faq-section">
-                <p className="faq-label">Preguntas rápidas:</p>
+                <p className="faq-label">Preguntas frecuentes:</p>
                 <div className="faq-buttons">
+                    {/* Botones dinámicos desde la Base de Datos */}
                     {faqs.map(faq => (
-                        <button key={faq} className="faq-btn" onClick={() => sendMessage(faq)}>
-                            {faq}
+                        <button key={faq.id} className="faq-btn" onClick={() => sendMessage(faq.pregunta)}>
+                            {faq.pregunta}
                         </button>
                     ))}
                 </div>

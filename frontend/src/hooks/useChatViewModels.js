@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 export const useChatViewModel = () => {
     const [messages, setMessages] = useState([
-        { text: "¡Hola! Bienvenido a Tecnología Gesvi. ¿En qué puedo ayudarte?", sender: "bot" }
+        { text: "¡Hola! Bienvenido a Tecnología Gesvi. ¿En qué puedo ayudarle?", sender: "bot" }
     ]);
     const [loading, setLoading] = useState(false);
 
@@ -20,7 +20,7 @@ export const useChatViewModel = () => {
             const data = await response.json();
             setMessages([...newMessages, { text: data.reply, sender: "bot" }]);
         } catch (error) {
-            setMessages([...newMessages, { text: "Error de conexión con el servidor.", sender: "bot" }]);
+            setMessages([...newMessages, { text: "Error de conexión en el servidor", sender: "bot" }]);
         } finally {
             setLoading(false);
         }

@@ -16,6 +16,8 @@ export const useChatViewModel = () => {
     }, []);
 
     const sendMessage = async (text) => {
+        const startTime = Date.now(); // ⏱️ Inicia el cronómetro
+        
         const newMessages = [...messages, { text, sender: "user" }];
         setMessages(newMessages);
         setLoading(true);
@@ -24,16 +26,36 @@ export const useChatViewModel = () => {
             const response = await fetch('http://localhost:5000/api/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: text }),
+                // Enviamos el mensaje Y el historial para que la IA tenga memoria
+                body: JSON.stringify({ 
+                    message: text,
+                    history: messages 
+                }),
             });
+
             const data = await response.json();
-            setMessages([...newMessages, { text: data.reply, sender: "bot" }]);
+            
+            const endTime = Date.now(); // 🏁 Fin del cronómetro
+            const duration = ((endTime - startTime) / 1000).toFixed(1); // Cálculo en segundos
+
+            setMessages([
+                ...newMessages, 
+                { 
+                    text: data.reply, 
+                    sender: "bot", 
+                    time: duration // Guardamos el tiempo para mostrarlo en el App.js
+                }
+            ]);
         } catch (error) {
-            setMessages([...newMessages, { text: "No hay conexión con el servidor", sender: "bot" }]);
+            setMessages([
+                ...newMessages, 
+                { text: "No hay conexión con el servidor", sender: "bot" }
+            ]);
         } finally {
             setLoading(false);
         }
     };
 
-    return { messages, sendMessage, loading, faqs };
+    // Exportamos setFaqs por si quieres que la Intranet actualice los botones al guardar
+    return { messages, sendMessage, loading, faqs, setFaqs };
 };

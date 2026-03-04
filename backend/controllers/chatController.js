@@ -69,3 +69,35 @@ exports.deleteFaq = async (req, res) => {
         res.status(500).json({ error: "Error al eliminar." });
     }
 };
+// Cambia la línea 72 por esto:
+const dbConfig = require('../models/db');
+exports.atenderMensaje = async (req, res) => {
+    // 1. Consultamos SQL antes de responder
+    const [config] = await db.query('SELECT * FROM bot_settings WHERE id = 1');
+    const settings = config[0];
+
+    // 2. Aplicamos la lógica
+    if (settings.mantenimiento) {
+        return res.json({ respuesta: "Estamos en mantenimiento técnico." });
+    }
+
+    // Si el usuario acaba de entrar, enviamos el mensaje personalizado
+    if (req.body.esNuevo) {
+        return res.json({ respuesta: settings.mensaje_bienvenida });
+    }
+    
+    // ... resto de tu lógica de FAQs
+};
+// Ejemplo de cómo quedaría tu lógica de respuesta
+exports.obtenerRespuesta = async (req, res) => {
+    const textoUsuario = req.body.mensaje;
+
+    // Buscamos en la base de datos SQL que gestionas desde la web externa
+    const [rows] = await db.query('SELECT respuesta FROM faq WHERE palabra_clave = ?', [textoUsuario]);
+
+    if (rows.length > 0) {
+        res.json({ respuesta: rows[0].respuesta });
+    } else {
+        res.json({ respuesta: "Lo siento, no entiendo esa consulta." });
+    }
+};

@@ -1,17 +1,17 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import ChatInterface from './ChatInterface'; // Este está en la raíz de src
-import AdminPage from './pages/AdminPage';   // IMPORTANTE: Está dentro de la carpeta 'pages'
+import ChatInterface from './ChatInterface'; 
+import AdminPage from './pages/AdminPage'; 
 import './App.css';
 
 function App() {
     return (
         <Router>
             <Routes>
-                {/* Lo que ven los clientes */}
+                {/* Lo que ve el cliente final */}
                 <Route path="/" element={<ChatInterface />} />
 
-                {/* TU LINK EXTERNO: Entra aquí para configurar */}
+                {/* Tu panel secreto con el cajón no editable que ya te funciona */}
                 <Route path="/panel-control-secreto" element={<AdminPage />} />
             </Routes>
         </Router>

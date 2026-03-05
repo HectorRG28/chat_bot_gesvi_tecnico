@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 .admin-container {
     background: #fdf2f8; /* Un toque de rosa muy suave de fondo */
     min-height: 100vh;
@@ -80,4 +81,98 @@
     margin-top: 10px;
     cursor: pointer;
     text-decoration: underline;
+}
+/* Contenedor del fondo oscuro */
+.gesvi-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.85); /* Oscurecemos más para que resalte el modal */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    backdrop-filter: blur(5px); /* Efecto profesional de desenfoque al fondo */
+}
+
+/* La tarjeta del modal */
+.gesvi-modal {
+    background: #4a148c; 
+    padding: 2rem;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    border: 3px solid #ff4081;
+    animation: slideIn 0.3s ease-out; /* Animación de entrada */
+}
+
+/* CONTROL DEL LOGO EN EL MODAL (Esto arregla tu problema) */
+.gesvi-modal img {
+    width: 120px; /* Tamaño controlado */
+    height: auto;
+    margin-bottom: 1rem;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.gesvi-modal h3 {
+    color: white;
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+}
+
+.gesvi-modal p {
+    color: #e0e0e0;
+    margin-bottom: 20px;
+}
+
+@keyframes slideIn {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+/* Este es el contenedor de los botones de Eliminar y Cancelar */
+.modal-actions {
+    display: flex;         /* Activamos el modo flexible */
+    justify-content: center; /* ¡ESTA ES LA CLAVE! Centra los botones horizontalmente */
+    gap: 20px;            /* Da un respiro entre un botón y otro */
+    margin-top: 25px;      /* Separa los botones del texto de arriba */
+    width: 100%;           /* Ocupa todo el ancho para poder centrar */
+}
+
+/* Opcional: Dale un ancho fijo a los botones para que se vean simétricos */
+.modal-actions button {
+    min-width: 100px;      /* Hace que ambos botones tengan el mismo tamaño base */
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 8px;
+    font-weight: bold;
+    border: none;
+    transition: transform 0.2s; /* Un pequeño efecto al pasar el ratón */
+}
+
+.modal-actions button:hover {
+    transform: scale(1.05); /* Se agrandan un poquito al tocarlos */
+}
+.main-wrapper {
+    font-family: 'Inter', sans-serif; /* Esta es la fuente de la imagen */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #334155; /* Un gris oscuro similar al de la imagen */
+}
+
+/* Para asegurar que los inputs y botones también la usen */
+.main-wrapper input, 
+.main-wrapper textarea, 
+.main-wrapper button {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Estilo específico para los títulos basado en tu imagen */
+.admin-form-header h1, .gesvi-modal h3 {
+    font-weight: 600;
+    letter-spacing: -0.02em; /* Inter suele verse mejor con un poco menos de espacio */
 }
